@@ -81,3 +81,13 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+// computing username
+
+const createUsername = function (user) {
+  const username = user
+  .toLowerCase()  
+  .split(' ')
+  .map(el=> el[0])
+  .join('');
+}
