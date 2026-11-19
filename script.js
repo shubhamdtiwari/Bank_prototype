@@ -84,10 +84,14 @@ displayMovements(account1.movements);
 
 // computing username
 
-const createUsername = function (user) {
-  const username = user
-  .toLowerCase()  
-  .split(' ')
-  .map(el=> el[0])
-  .join('');
+const createUsername = function (accs) {
+  accs.forEach(function(acc){
+    
+    acc.username = acc.owner
+    .toLowerCase()  
+    .split(' ')
+    .map(el=> el[0])
+    .join('');
+  })
 }
+createUsername(accounts);
