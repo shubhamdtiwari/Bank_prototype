@@ -62,28 +62,28 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-
 // computing username
 
 const createUsername = function (accs) {
-  accs.forEach(function(acc){
-    
+  accs.forEach(function (acc) {
     acc.username = acc.owner
-    .toLowerCase()  
-    .split(' ')
-    .map(el=> el[0])
-    .join('');
-  })
-}
+      .toLowerCase()
+      .split(' ')
+      .map((el) => el[0])
+      .join('');
+  });
+};
 createUsername(accounts);
 
 // adding movements
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   // for clearing the hardcode data
   containerMovements.innerHTML = '';
 
-  movements.forEach((mov, i) => {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach((mov, i) => {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -96,8 +96,6 @@ const displayMovements = function (movements) {
   });
 };
 
-
-
 // calculate balance
 
 const calcDisplayBalance = function (acc) {
@@ -105,8 +103,6 @@ const calcDisplayBalance = function (acc) {
 
   labelBalance.textContent = `${acc.balance} €`;
 };
-
-
 
 // calculating display summarry
 const calcDisplaySummary = function (acc) {
@@ -195,12 +191,15 @@ transferBtn.addEventListener('click', function (e) {
 });
 // loan function
 
-LoanBtn.addEventListener('click', function(e){
+LoanBtn.addEventListener('click', function (e) {
   e.preventDefault();
 
   const amount = Number(inputLoanAmount.value);
 
-  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.12)){
+  if (
+    amount > 0 &&
+    currentAccount.movements.some((mov) => mov >= amount * 0.12)
+  ) {
     currentAccount.movements.push(amount);
 
     // update UI
@@ -208,9 +207,8 @@ LoanBtn.addEventListener('click', function(e){
 
     // clear the input
     inputLoanAmount.value = '';
-
   }
-})
+});
 
 // close function
 closeBtn.addEventListener('click', function (e) {
@@ -232,4 +230,12 @@ closeBtn.addEventListener('click', function (e) {
   }
 
   inputCloseUsername.value = inputClosePin.value = '';
+});
+
+let sorted = false;
+sortBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
