@@ -170,6 +170,7 @@ loginBtn.addEventListener('click', function (e) {
   }
 });
 
+// tranfer function
 transferBtn.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -191,4 +192,26 @@ transferBtn.addEventListener('click', function (e) {
     // update UI
     updateUI(currentAccount);
   }
+});
+
+// close function
+closeBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      (acc) => acc.username === currentAccount.username,
+    );
+    console.log(index);
+    //delete account
+    accounts.splice(index, 1);
+
+    // hide ui
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = '';
 });
