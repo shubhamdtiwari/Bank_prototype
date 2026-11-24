@@ -151,7 +151,7 @@ loginBtn.addEventListener('click', function (e) {
 
   // cheaking for correct pin
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // display welcome msg
     labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
 
@@ -170,7 +170,7 @@ loginBtn.addEventListener('click', function (e) {
 transferBtn.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const reciverAcc = accounts.find(
     (acc) => acc.username === inputTransferTo.value,
   );
@@ -194,7 +194,7 @@ transferBtn.addEventListener('click', function (e) {
 LoanBtn.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (
     amount > 0 &&
@@ -216,7 +216,7 @@ closeBtn.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       (acc) => acc.username === currentAccount.username,
