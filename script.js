@@ -11,11 +11,11 @@ const account1 = {
     '2019-11-18T21:31:17.178Z',
     '2019-12-23T07:42:02.383Z',
     '2020-01-28T09:15:04.904Z',
-    '2020-04-01T10:17:24.185Z',
-    '2020-05-08T14:11:59.604Z',
-    '2026-04-04T17:01:17.194Z',
-    '2026-04-06T23:36:17.929Z',
-    '2026-04-07T10:51:36.790Z',
+    '2026-11-10T10:17:24.185Z',
+    '2026-11-20T14:11:59.604Z',
+    '2026-11-24T17:01:17.194Z',
+    '2026-11-26T23:36:17.929Z',
+    '2026-11-27T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -99,6 +99,23 @@ const createUsername = function (accs) {
 };
 createUsername(accounts);
 
+const formateMovementDate = function (date) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs((date2 - date1) / (1000 * 60 * 60 * 24)));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  else {
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+};
+
 // adding movements
 
 const displayMovements = function (acc, sort = false) {
@@ -114,17 +131,14 @@ const displayMovements = function (acc, sort = false) {
 
   // const movs = sort
   //   ? acc.movements.slice().sort((a, b) => a - b)
-  //   : acc.movements;
+  //   : acc.movements;const displayDate
 
   combinedMovsDates.forEach((obj, i) => {
     const { movement, movementDate } = obj;
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(movementDate);
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const displayDate = `${day}/${month}/${year}`;
+    const displayDate = formateMovementDate(date);
 
     const html = `
                 <div class="movements__row">
