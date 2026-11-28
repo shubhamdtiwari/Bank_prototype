@@ -52,10 +52,10 @@ const account3 = {
     '2019-11-30T09:48:16.867Z',
     '2019-12-25T06:04:23.907Z',
     '2020-01-25T14:18:46.235Z',
-    '2020-02-05T16:33:06.386Z',
-    '2020-04-10T14:43:26.374Z',
-    '2020-06-25T18:49:59.371Z',
-    '2020-07-26T12:01:20.894Z',
+    '2026-11-20T14:11:59.604Z',
+    '2026-11-24T17:01:17.194Z',
+    '2026-11-26T23:36:17.929Z',
+    '2026-11-27T10:51:36.790Z',
   ],
   currency: 'INR',
   locale: 'en-IN',
@@ -312,18 +312,20 @@ LoanBtn.addEventListener('click', function (e) {
 
   if (
     amount > 0 &&
-    currentAccount.movements.some((mov) => mov >= amount * 0.12)
+    currentAccount.movements.some((mov) => mov >= amount * 0.1)
   ) {
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      currentAccount.movements.push(amount);
 
-    // Adding loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Adding loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // update UI
-    updateUI(currentAccount);
+      // update UI
+      updateUI(currentAccount);
 
-    // clear the input
-    inputLoanAmount.value = '';
+      // clear the input
+      inputLoanAmount.value = '';
+    }, 2500);
   }
 });
 
